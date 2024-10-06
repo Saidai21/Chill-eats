@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button default-href="#"></ion-back-button>
+    </ion-buttons>
+    <ion-title id="titulo">Chill-Eats</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">cupon-1</ion-title>
+    </ion-toolbar>
+  </ion-header>
+    <img src="https://img.freepik.com/fotos-premium/etiqueta-ofertas-descuento-25-ciento-diseno-estilo-relieve-rosa_2239-21113.jpg" alt="" >
+  <div id="container">
+    <h1>25% de descuento</h1>
+    <p>25% de descuento en compras de más de $10.000</p>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-button size="large" expand="block" id="btn" (click)="ejecutar()">CANJEAR</ion-button>
+</ion-footer>

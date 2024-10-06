@@ -1,0 +1,93 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-button (click)="goToMainPage()">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title id="titulo">Pizza</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Pizza</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Comida Italiana</ion-card-title>
+      <ion-card-subtitle>Precios en Chile</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <!-- Pizza 1 -->
+        <ion-item>
+          <ion-thumbnail slot="end" class="thumbnail-large">
+            <img alt="Pizza Margherita" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTY7RbPLpeQGEKr-JMLB6L9kRdCTMtUbFJfJw&s" />
+            <ion-button fill="clear" class="add-button" shape="round" size="small">+</ion-button>
+          </ion-thumbnail>
+          <ion-label>
+            <h2>Pizza Margherita</h2>
+            <ion-card-subtitle>$8,000 CLP</ion-card-subtitle>
+          </ion-label>
+        </ion-item>
+
+        <!-- Pizza 2 -->
+        <ion-item>
+          <ion-thumbnail slot="end" class="thumbnail-large">
+            <img alt="Pizza Pepperoni" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxkIV-kHMW8ry4k7uYLTCc31psydX4M_yZcQ&s" />
+            <ion-button fill="clear" class="add-button" shape="round" size="small">+</ion-button>
+          </ion-thumbnail>
+          <ion-label>
+            <h2>Pizza Pepperoni</h2>
+            <ion-card-subtitle>$9,000 CLP</ion-card-subtitle>
+          </ion-label>
+        </ion-item>
+
+        <!-- Pizza 3 -->
+        <ion-item>
+          <ion-thumbnail slot="end" class="thumbnail-large">
+            <img alt="Pizza Cuatro Quesos" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU4Q6QJy0S30pv_8IYxnjIpltQHKu_j9l3nw&s" />
+            <ion-button fill="clear" class="add-button" shape="round" size="small">+</ion-button>
+          </ion-thumbnail>
+          <ion-label>
+            <h2>Pizza Cuatro Quesos</h2>
+            <ion-card-subtitle>$9,500 CLP</ion-card-subtitle>
+          </ion-label>
+        </ion-item>
+
+        <!-- Pizza 4 -->
+        <ion-item>
+          <ion-thumbnail slot="end" class="thumbnail-large">
+            <img alt="Pizza Hawaiana" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtP-2LGl3lObIN04XA1oEoNn26v7ykCOOcMQ&s" />
+            <ion-button fill="clear" class="add-button" shape="round" size="small">+</ion-button>
+          </ion-thumbnail>
+          <ion-label>
+            <h2>Pizza Hawaiana</h2>
+            <ion-card-subtitle>$8,500 CLP</ion-card-subtitle>
+          </ion-label>
+        </ion-item>
+
+        <!-- Pizza 5 -->
+        <ion-item>
+          <ion-thumbnail slot="end" class="thumbnail-large">
+            <img alt="Pizza Vegetariana" src="https://www.pizzapizza.cl/wp-content/uploads/2021/01/vegetariana-web-scaled.jpg" />
+            <ion-button fill="clear" class="add-button" shape="round" size="small">+</ion-button>
+          </ion-thumbnail>
+          <ion-label>
+            <h2>Pizza Vegetariana</h2>
+            <ion-card-subtitle>$7,500 CLP</ion-card-subtitle>
+          </ion-label>
+        </ion-item>
+        
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Botón para pagar carrito -->
+  <ion-button id="pay-button" expand="block" [routerLink]="['/carrito']">Pagar Carrito</ion-button>
+</ion-content>

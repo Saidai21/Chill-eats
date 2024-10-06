@@ -1,0 +1,64 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-title id="titulo">
+      Chill-Eats 
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Blank</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">  
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" size-md="6" size-sm="12" size-lg="6" size-xs="12">
+          <div>
+            <img src="https://www.hola.com/horizon/landscape/e9e1e82cb873-pepperoni-pizza-abob-t.jpg" alt="pizza" style="border-radius: 4%;" routerLink="/pizza">
+          </div>
+        </ion-col>
+        <ion-col size="6" size-md="6" size-sm="12" size-xs="12">
+          <div>
+            <img src="https://imagenes.20minutos.es/files/image_1920_1080/uploads/imagenes/2023/11/27/comida-china.jpeg" alt="china" style="border-radius: 4%;" routerLink="/comida-china"> 
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="6" size-md="6" size-sm="12" size-xs="12" >
+          <div>
+            <img src="https://fondosmil.co/fondo/75570.jpg" alt="Hamburguesas" style="border-radius: 4%;" routerLink="/hamburguesa">
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>   
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="Inicio" [routerLink]="['/home']" [disabled]="true">
+          <ion-icon name="home-outline"></ion-icon>
+          Inicio
+        </ion-tab-button>
+        <ion-tab-button tab="Tiendas" [routerLink]="['/tiendas']"  >
+          <ion-icon name="bag-outline" ></ion-icon>
+          Tiendas
+        </ion-tab-button>
+        <ion-tab-button tab="Cupones" [routerLink]="['/cupones']" >
+          <ion-icon name="ticket-outline" ></ion-icon>
+          Cupones 
+        </ion-tab-button>
+        <ion-tab-button tab="Perfil" [routerLink]="['/perfil']">
+          <ion-icon name="person-outline"></ion-icon>
+          Perfil
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-footer>

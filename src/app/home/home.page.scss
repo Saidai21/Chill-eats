@@ -1,0 +1,18 @@
+#titulo{
+  text-align: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: xx-large;
+  background: linear-gradient(#e66465, #9198e5);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+ion-content{
+  border: 5px solid #383a3e;
+  border-bottom: none;
+  border-top:none;
+}
+
+#container{
+  margin: 30px;
+}
