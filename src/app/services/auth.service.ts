@@ -1,35 +1,49 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore) {}
+  constructor(
+    private afAuth: AngularFireAuth,
+    private firestore: AngularFirestore
+  ) {}
 
-  // Registro de usuario
-  async register(email: string, password: string, name: string): Promise<void> {
+  async login(email: string, password: string) {
+    try {
+      const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
+      const user = userCredential.user; 
+      if (user) {
+        return user;
+      } else {
+        throw new Error('No se pudo obtener el usuario');
+      }
+    } catch (error: any) { 
+      throw new Error(error.message || 'Error desconocido al iniciar sesión');
+    }
+  }
+
+  async register(email: string, password: string, name: string) {
     try {
       const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
       const user = userCredential.user;
 
       if (user) {
-        // Almacenar el usuario en Firestore
-        return this.firestore.collection('users').doc(user.uid).set({
+        await this.firestore.collection('users').doc(user.uid).set({
           uid: user.uid,
-          email: user.email,
-          name: name
+          email: email,
+          name: name,
         });
+      } else {
+        throw new Error('No se pudo crear el usuario');
       }
-    } catch (error) {
-      console.error('Error al registrarse:', error);
-      throw error;
+    } catch (error: any) { 
+      throw new Error(error.message || 'Error desconocido al registrar');
     }
-  }
-
-  // Inicio de sesión de usuario
-  login(email: string, password: string): Promise<any> {
-    return this.afAuth.signInWithEmailAndPassword(email, password);
   }
 }

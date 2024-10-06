@@ -19,7 +19,6 @@ export class IniciarSesionPage {
   
   segment: string = 'login';
 
-  
   constructor(
     private authService: AuthService, 
     private alertController: AlertController, 
@@ -27,13 +26,16 @@ export class IniciarSesionPage {
   ) {}
 
   // Método para iniciar sesión
-  login() {
+  async login() {
     try {
-      this.authService.login(this.email, this.password);
+      await this.authService.login(this.email, this.password);
       this.presentAlert('Inicio de sesión exitoso', 'Has iniciado sesión correctamente.');
+      localStorage.setItem('fullName', this.registerName); // Asegúrate de que `registerName` tenga el valor correcto
+      localStorage.setItem('email', this.email);
       this.router.navigate(['/home']);
     } catch (error) {
-      this.presentAlert('Error', 'Hubo un problema con el inicio de sesión.');
+      const errorMessage = (error as any).message || 'Hubo un problema con el inicio de sesión.';
+      this.presentAlert('Error', errorMessage);
     }
     console.log('Login realizado');
   }
@@ -48,8 +50,10 @@ export class IniciarSesionPage {
     try {
       await this.authService.register(this.registerEmail, this.registerPassword, this.registerName);
       this.presentAlert('Registro exitoso', 'Tu cuenta ha sido creada.');
+      this.segment = 'login'; // Cambia al segmento de inicio de sesión después del registro
     } catch (error) {
-      this.presentAlert('Error', 'Hubo un problema con el registro.');
+      const errorMessage = (error as any).message || 'Hubo un problema con el registro.';
+      this.presentAlert('Error', errorMessage);
     }
   }
 
