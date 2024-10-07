@@ -46,4 +46,12 @@ export class AuthService {
       throw new Error(error.message || 'Error desconocido al registrar');
     }
   }
+
+  async logout(){
+    this.afAuth.signOut();
+  }
+
+  getUser(){
+    return this.afAuth.user;
+  }
 }

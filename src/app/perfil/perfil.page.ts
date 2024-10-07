@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router'; 
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-perfil',
@@ -12,15 +14,27 @@ export class PerfilPage implements OnInit {
   email: string = '';
   phone: string = '';
   address: string = '';
-
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private aService:AuthService,private router:Router,private alertController:AlertController) {}
 
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.fullName = params['fullName'] || '';
-      this.email = params['email'] || '';
-      this.phone = params['phone'] || '';
-      this.address = params['address'] || ''
+    this.fullName = localStorage.getItem('fullName') || '';
+    this.email = localStorage.getItem('email') || '';
+  }
+
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['OK'],
     });
+    await alert.present();
+  }
+
+  logout(){
+    this.aService.logout();
+    localStorage.removeItem('fullName');
+    localStorage.removeItem('email');
+    this.presentAlert("Sesion Cerrada","Su sesion ha sido cerrada correctamente")
+    this.router.navigate(["/iniciar-sesion"]);
   }
 }
