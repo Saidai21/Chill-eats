@@ -14,10 +14,12 @@ export class AuthService {
     private firestore: AngularFirestore
   ) {}
 
+  userDoc :any;
+
   async login(email: string, password: string) {
     try {
       const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
-      const user = userCredential.user; 
+      const user = userCredential; 
       if (user) {
         return user;
       } else {
@@ -51,7 +53,23 @@ export class AuthService {
     this.afAuth.signOut();
   }
 
-  getUser(){
+  async getUserData(): Promise<any | undefined> {
+    try {
+        const user = await this.afAuth.currentUser;
+
+        if (user) {
+            this.userDoc = await this.firestore.collection('users').doc(user.uid).get().toPromise();
+            return this.userDoc.exists ? this.userDoc.data() : undefined; // Retornar undefined si el documento no existe
+        } else {
+            throw new Error('No hay un usuario autenticado');
+        }
+    } catch (error: any) {
+        throw new Error(error.message || 'Error al obtener los datos del usuario');
+    }
+
+  }
+
+   obtenerUser(){
     return this.afAuth.user;
   }
 }
