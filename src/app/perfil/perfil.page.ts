@@ -35,6 +35,6 @@ export class PerfilPage implements OnInit {
     localStorage.removeItem('fullName');
     localStorage.removeItem('email');
     this.presentAlert("Sesion Cerrada","Su sesion ha sido cerrada correctamente")
-    this.router.navigate(["/iniciar-sesion"]);
+    this.router.navigate(["/iniciar-sesion"], { queryParams: { loggedOut: true } });
   }
 }

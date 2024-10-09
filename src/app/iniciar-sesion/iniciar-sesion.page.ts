@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -20,10 +21,20 @@ export class IniciarSesionPage {
   segment: string = 'login';
 
   constructor(
+    private route: ActivatedRoute,
     private authService: AuthService, 
     private alertController: AlertController, 
     private router: Router  
   ) {}
+
+  ngOnInit(){
+    this.route.queryParams.subscribe(params => {
+      if (params['loggedOut']) {
+        this.email = ''; // Limpiar el input de email
+        this.password = ''; // Limpiar el input de contraseña
+      }
+    });
+  }
 
   // Método para iniciar sesión
   async login() {
