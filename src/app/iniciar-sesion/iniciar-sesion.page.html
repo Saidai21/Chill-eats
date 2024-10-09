@@ -6,11 +6,11 @@
 
 <ion-content [fullscreen]="true">
   <div id="container">
-    <ion-card class="auth-card" *ngIf="segment === 'login'">
+    <ion-card class="auth-card ion-ca" *ngIf="segment === 'login'" >
       <ion-card-header>
         <ion-card-title>Iniciar Sesión</ion-card-title>
       </ion-card-header>
-      <ion-card-content>
+      <ion-card-content >
         <ion-input placeholder="Correo Electrónico" type="email" [(ngModel)]="email"></ion-input>
         <ion-input type="password" placeholder="Contraseña" [(ngModel)]="password"></ion-input>
         <ion-button expand="full" (click)="login()">Iniciar Sesión</ion-button>
