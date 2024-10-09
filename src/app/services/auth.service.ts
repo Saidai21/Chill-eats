@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +36,14 @@ export class AuthService {
           email: email,
           name: name,
         });
+
+        // Crear una colección de direcciones
+        await this.firestore.collection('users').doc(user.uid).collection('direcciones').add({
+          address: null
+        });
+        
+
+        return user;
       } else {
         throw new Error('No se pudo crear el usuario');
       }
@@ -47,11 +52,11 @@ export class AuthService {
     }
   }
 
-  async logout(){
+  async logout() {
     this.afAuth.signOut();
   }
 
-  getUser(){
+  getUser() {
     return this.afAuth.user;
   }
 }

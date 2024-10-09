@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DireccionService } from '../services/direccion.service'; // Ajusta la ruta según tu estructura
 
 @Component({
   selector: 'app-home',
@@ -6,15 +7,28 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  fullName: string = '';
-  email: string = '';
-  phone: string = '';
-  address: string = '';
+  direcciones: any[] = [];
+  nuevaDireccion: string = '';
 
-  constructor() {}
+  constructor(private direccionService: DireccionService) {
+    this.cargarDirecciones();
+  }
 
-  ngOnInit() {
-    this.fullName = localStorage.getItem('fullName') || '';
-    this.email = localStorage.getItem('email') || '';
+  async cargarDirecciones() {
+    try {
+      const snapshot = await this.direccionService.cargarDirecciones();
+    } catch (error) {
+      console.error('Error al cargar direcciones:', error);
+    }
+  }
+
+  async agregarDireccion() {
+    try {
+      await this.direccionService.agregarDireccion(this.nuevaDireccion);
+      this.nuevaDireccion = ''; // Limpiar el campo
+      this.cargarDirecciones(); // Recargar direcciones después de agregar
+    } catch (error) {
+      console.error('Error al agregar dirección:', error);
+    }
   }
 }
