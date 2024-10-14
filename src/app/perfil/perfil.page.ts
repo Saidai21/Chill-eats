@@ -3,6 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-perfil',
@@ -11,25 +12,22 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class PerfilPage implements OnInit {
   userData: any;
-  fullName: string = '';
+  Name: string = '';
   email: string = '';
   phone: string = '';
   address: string = '';
+  user$!: Observable<any>
   constructor(private aService:AuthService,private router:Router,private alertController:AlertController,private firestore: AngularFirestore) {}
 
 async ngOnInit() {
-    try {
-        const data =  this.aService.obtenerUser();
-        if (data) {
-            this.userData = data;
-            console.log('Datos del usuario:', this.userData);
-        } else {
-            console.error('No se encontraron datos del usuario.');
-        }
-    } catch (error) {
-        console.error('Error al obtener los datos del usuario:', error);
-    }
+  this.user$ = this.aService.obtenerUser();
+  this.user$.subscribe(user => {
+    console.log(user); 
+  });
+
 }
+
+
 
   async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({

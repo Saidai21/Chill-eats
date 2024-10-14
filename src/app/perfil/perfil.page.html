@@ -21,14 +21,14 @@
         <ion-img src="https://i.pinimg.com/236x/2f/97/f0/2f97f05b32547f54ef1bdf99cd207c90.jpg" alt="Imagen de perfil"></ion-img>
       </div>
 
-      <ion-item>
+      <ion-item *ngIf="user$ | async as user;">
         <ion-label position="stacked">Nombre</ion-label>
-        <ion-text>{{ userData?.name }}</ion-text>
+        <ion-text>{{ user.name }}</ion-text>
       </ion-item>
 
-      <ion-item>
+      <ion-item *ngIf="user$ | async as user;">
         <ion-label position="stacked">Correo Electrónico</ion-label>
-        <ion-text>{{ userData?.email }}</ion-text>
+        <ion-text>{{ user.email }}</ion-text>
       </ion-item>
 
       <ion-item>

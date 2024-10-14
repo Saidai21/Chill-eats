@@ -1,35 +1,44 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  userDoc: any;
+
   constructor(
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore
   ) {}
 
-  userDoc :any;
-
   async login(email: string, password: string) {
     try {
-      const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
-      const user = userCredential; 
+      const userCredential = await this.afAuth.signInWithEmailAndPassword(
+        email,
+        password
+      );
+      const user = userCredential.user;
+
       if (user) {
         return user;
       } else {
         throw new Error('No se pudo obtener el usuario');
       }
-    } catch (error: any) { 
+    } catch (error: any) {
       throw new Error(error.message || 'Error desconocido al iniciar sesión');
     }
   }
 
   async register(email: string, password: string, name: string) {
     try {
-      const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
+      const userCredential = await this.afAuth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
       const user = userCredential.user;
 
       if (user) {
@@ -39,45 +48,37 @@ export class AuthService {
           name: name,
         });
 
-        // Crear una colección de direcciones
-        await this.firestore.collection('users').doc(user.uid).collection('direcciones').add({
-          address: null
-        });
-        
+        await this.firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('direcciones')
+          .add({
+            address: null, // Puedes ajustar esto según sea necesario
+          });
 
         return user;
       } else {
         throw new Error('No se pudo crear el usuario');
       }
-    } catch (error: any) { 
+    } catch (error: any) {
       throw new Error(error.message || 'Error desconocido al registrar');
     }
   }
 
+  // Método para cerrar sesión
   async logout() {
-    this.afAuth.signOut();
+    await this.afAuth.signOut();
   }
 
-  async getUserData(): Promise<any | undefined> {
-    try {
-        const user = await this.afAuth.currentUser;
-
+  obtenerUser(): Observable<any> {  
+    return this.afAuth.authState.pipe(
+      switchMap(user => {
         if (user) {
-            this.userDoc = await this.firestore.collection('users').doc(user.uid).get().toPromise();
-            return this.userDoc.exists ? this.userDoc.data() : undefined; // Retornar undefined si el documento no existe
+          return this.firestore.collection('users').doc(user.uid).valueChanges();
         } else {
-            throw new Error('No hay un usuario autenticado');
+          return new Observable();
         }
-    } catch (error: any) {
-        throw new Error(error.message || 'Error al obtener los datos del usuario');
-    }
-
-  }
-
-   obtenerUser(){
-    return this.afAuth.user;
-   }
-   getUser() {
-    return this.afAuth.user;
+      })
+    );
   }
 }
