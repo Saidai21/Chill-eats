@@ -24,63 +24,14 @@
 
     <ion-card-content>
       <ion-list>
-        <!-- Comida 1 -->
-        <ion-item>
+        <ion-item *ngFor="let producto of comidas | async">
           <ion-thumbnail slot="end" class="thumbnail-large">
-            <img alt="Pollo mongoliano" src="https://tofuu.getjusto.com/orioneat-prod/LTnwqFREM2J43qEg2-3c1617d4-bdf0-4b01-ab1a-f0a5082cdcf8.jpg" />
-            <ion-button fill="clear" class="add-button" shape="round" size="small">+</ion-button>
+            <img [src]="producto.imagen" alt="{{ producto.nombre }}" />
+            <ion-button fill="clear" class="add-button" shape="round" size="small" (click)="agregarProducto(producto)">+</ion-button>
           </ion-thumbnail>
           <ion-label>
-            <h2>Pollo Mongoliano</h2>
-            <ion-card-subtitle>$6,500 CLP</ion-card-subtitle>
-          </ion-label>
-        </ion-item>
-
-        <!-- Comida 2 -->
-        <ion-item>
-          <ion-thumbnail slot="end" class="thumbnail-large">
-            <img alt="Chop Suey" src="https://storage.googleapis.com/avena-recipes/2019/10/1571780631375.jpeg" />
-            <ion-button fill="clear" class="add-button" shape="round" size="small">+</ion-button>
-          </ion-thumbnail>
-          <ion-label>
-            <h2>Chop Suey</h2>
-            <ion-card-subtitle>$5,800 CLP</ion-card-subtitle>
-          </ion-label>
-        </ion-item>
-
-        <!-- Comida 3 -->
-        <ion-item>
-          <ion-thumbnail slot="end" class="thumbnail-large">
-            <img alt="Arroz Chaufán" src="https://tofuu.getjusto.com/orioneat-prod/mtvqGWwTREeqnwCXz-b9190a31-c5eb-4996-aebb-a5042378bf51%20(1).jpg" />
-            <ion-button fill="clear" class="add-button" shape="round" size="small">+</ion-button>
-          </ion-thumbnail>
-          <ion-label>
-            <h2>Arroz Chaufán</h2>
-            <ion-card-subtitle>$4,500 CLP</ion-card-subtitle>
-          </ion-label>
-        </ion-item>
-
-        <!-- Comida 4 -->
-        <ion-item>
-          <ion-thumbnail slot="end" class="thumbnail-large">
-            <img alt="Cerdo agridulce" src="https://ep01.epimg.net/elcomidista/imagenes/2021/06/07/receta/1623075949_516425_1624269315_noticia_fotograma.jpg" />
-            <ion-button fill="clear" class="add-button" shape="round" size="small">+</ion-button>
-          </ion-thumbnail>
-          <ion-label>
-            <h2>Cerdo Agridulce</h2>
-            <ion-card-subtitle>$6,800 CLP</ion-card-subtitle>
-          </ion-label>
-        </ion-item>
-
-        <!-- Comida 5 -->
-        <ion-item>
-          <ion-thumbnail slot="end" class="thumbnail-large">
-            <img alt="Wantán frito" src="https://live.staticflickr.com/3343/3526813234_d840fca3b7_z.jpg" />
-            <ion-button fill="clear" class="add-button" shape="round" size="small">+</ion-button>
-          </ion-thumbnail>
-          <ion-label>
-            <h2>Wantán Frito</h2>
-            <ion-card-subtitle>$3,200 CLP</ion-card-subtitle>
+            <h2>{{ producto.nombre }}</h2>
+            <ion-card-subtitle>${{ producto.valor }} CLP</ion-card-subtitle>
           </ion-label>
         </ion-item>
       </ion-list>

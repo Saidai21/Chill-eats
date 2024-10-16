@@ -29,7 +29,7 @@ export class AuthService {
         throw new Error('No se pudo obtener el usuario');
       }
     } catch (error: any) {
-      throw new Error('Error, su correo no esta registrado');
+      throw new Error(error.message || 'Error desconocido al iniciar sesión');
     }
   }
 
@@ -61,7 +61,7 @@ export class AuthService {
         throw new Error('No se pudo crear el usuario');
       }
     } catch (error: any) {
-      throw new Error('Error al registrar usuario');
+      throw new Error(error.message || 'Error desconocido al registrar');
     }
   }
 
