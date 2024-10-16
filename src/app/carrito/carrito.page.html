@@ -30,7 +30,7 @@
           <ion-label>Hamburgesa clasica: $500</ion-label>
         </ion-item>
       </ion-card-content>
-      <ion-button (click)="presentAlert()" (click)="ejecutar()">Comprar Ya</ion-button>
+      <ion-button (click)="presentAlert()" (click)="ejecutar()" [routerLink]="['/pedido']">Comprar Ya</ion-button>
     </ion-card>
   </div>
 
@@ -41,9 +41,7 @@
   </div>
 
   <div class="texto">
-    <p> Tu pedido llegará en unos momentos...</p>
-    
+    <p> Tu pedido llegará en unos momentos...</p>   
   </div>
-
 
 </ion-content>

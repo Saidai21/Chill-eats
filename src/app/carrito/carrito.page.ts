@@ -16,12 +16,14 @@ export class CarritoPage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Atención',
       message: 'Su pedido ha sido comprado con éxito',
-      buttons: ['Salir'],
+      buttons: ['Aceptar'],
     });
 
     await alert.present();
   }
 
+
+  
   ngAfterViewInit(){
     const moveAnimation = this.animationController.create()
     .addElement(document.querySelector('.moto') as HTMLElement)
