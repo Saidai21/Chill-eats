@@ -5,7 +5,7 @@ import { authGuard } from './auth/auth.guard';
 const routes: Routes = [
   {
     path: 'iniciar-sesion',
-    loadChildren: () => import('./iniciar-sesion/iniciar-sesion.module').then( m => m.IniciarSesionPageModule),
+    loadChildren: () => import('./iniciar-sesion/iniciar-sesion.module').then( m => m.IniciarSesionPageModule)
   },
   {
     path: '',
@@ -14,28 +14,33 @@ const routes: Routes = [
   },
   {
     path: 'tiendas',
-    loadChildren: () => import('./tiendas/tiendas.module').then( m => m.TiendasPageModule)
+    loadChildren: () => import('./tiendas/tiendas.module').then( m => m.TiendasPageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'cupones',
     loadChildren: () => import('./cupones/cupones.module').then( m => m.CuponesPageModule),
-    canActivate:[authGuard],
+    canActivate:[authGuard]
   },
   {
     path: 'perfil',
-    loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule)
+    loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'comida-china',
-    loadChildren: () => import('./comida-china/comida-china.module').then( m => m.ComidaChinaPageModule)
+    loadChildren: () => import('./comida-china/comida-china.module').then( m => m.ComidaChinaPageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'hamburguesa',
-    loadChildren: () => import('./hamburguesa/hamburguesa.module').then( m => m.HamburguesaPageModule)
+    loadChildren: () => import('./hamburguesa/hamburguesa.module').then( m => m.HamburguesaPageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'pizza',
-    loadChildren: () => import('./pizza/pizza.module').then( m => m.PizzaPageModule)
+    loadChildren: () => import('./pizza/pizza.module').then( m => m.PizzaPageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'home',
@@ -44,27 +49,33 @@ const routes: Routes = [
   },
   {
     path: 'cupon-1',
-    loadChildren: () => import('./cupon-1/cupon-1.module').then( m => m.Cupon1PageModule)
+    loadChildren: () => import('./cupon-1/cupon-1.module').then( m => m.Cupon1PageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'cupon-2',
-    loadChildren: () => import('./cupon-2/cupon-2.module').then( m => m.Cupon2PageModule)
+    loadChildren: () => import('./cupon-2/cupon-2.module').then( m => m.Cupon2PageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'cupon-3',
-    loadChildren: () => import('./cupon-3/cupon-3.module').then( m => m.Cupon3PageModule)
+    loadChildren: () => import('./cupon-3/cupon-3.module').then( m => m.Cupon3PageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'cupon-4',
-    loadChildren: () => import('./cupon-4/cupon-4.module').then( m => m.Cupon4PageModule)
+    loadChildren: () => import('./cupon-4/cupon-4.module').then( m => m.Cupon4PageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'carrito',
-    loadChildren: () => import('./carrito/carrito.module').then( m => m.CarritoPageModule)
+    loadChildren: () => import('./carrito/carrito.module').then( m => m.CarritoPageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'pedido',
-    loadChildren: () => import('./pedido/pedido.module').then( m => m.PedidoPageModule)
+    loadChildren: () => import('./pedido/pedido.module').then( m => m.PedidoPageModule),
+    canActivate:[authGuard]
   },
 
 
