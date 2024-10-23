@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CarritoService } from '../services/carrito.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-hamburguesa',
@@ -40,12 +41,13 @@ export class HamburguesaPage {
     },
   ];
 
-  constructor(private carritoService: CarritoService) {}
+  constructor(private carritoService: CarritoService, private router:Router) {}
 
   async agregarProducto(producto: { id: string; nombre: string; precio: number }) {
     await this.carritoService.agregarProducto(producto);
   }
 
   goToMainPage() {
+    this.router.navigate(['/home']);
   }
 }

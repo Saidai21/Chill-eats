@@ -18,7 +18,8 @@ const routes: Routes = [
   },
   {
     path: 'cupones',
-    loadChildren: () => import('./cupones/cupones.module').then( m => m.CuponesPageModule)
+    loadChildren: () => import('./cupones/cupones.module').then( m => m.CuponesPageModule),
+    canActivate:[authGuard],
   },
   {
     path: 'perfil',
