@@ -25,6 +25,7 @@
     "@ionic/angular": "^8.0.0",
     "@ionic/cli": "^7.2.0",
     "@types/leaflet": "^1.9.13",
+    "angularx-qrcode": "^18.0.2",
     "firebase": "^10.14.0",
     "ionicons": "^7.0.0",
     "leaflet": "^1.9.4",

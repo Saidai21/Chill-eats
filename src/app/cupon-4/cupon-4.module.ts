@@ -7,9 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { Cupon4PageRoutingModule } from './cupon-4-routing.module';
 
 import { Cupon4Page } from './cupon-4.page';
-
+import { QRCodeModule } from 'angularx-qrcode';
 @NgModule({
   imports: [
+    QRCodeModule,
     CommonModule,
     FormsModule,
     IonicModule,

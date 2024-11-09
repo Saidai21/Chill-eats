@@ -19,7 +19,16 @@
     <p>Solo en locales</p>
     <h1><b>$6.800</b></h1>
   </div>
+
+  <ion-modal trigger="open-modal" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+    <ng-template>
+      <input type="text" style="display: none;" [(ngModel)]="texto">
+      <qrcode [qrdata]="text" [width]="300" class="text-center"></qrcode> 
+      <p class="text-center" id="codigo"> {{numeroAleatorio}} </p>
+    </ng-template>
+  </ion-modal>
+  
 </ion-content>
 <ion-footer>
-  <ion-button size="large" expand="block" id="btn" >CANJEAR</ion-button>
+  <ion-button size="large" expand="block" id="open-modal" >CANJEAR</ion-button>
 </ion-footer>
