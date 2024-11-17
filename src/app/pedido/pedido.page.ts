@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
@@ -7,7 +7,7 @@ import 'leaflet-routing-machine';
   templateUrl: './pedido.page.html',
   styleUrls: ['./pedido.page.scss'],
 })
-export class PedidoPage implements OnInit {
+export class PedidoPage  {
 
   map!: L.Map;
   direccionOrigen: string = '';  // Dirección de origen
@@ -15,7 +15,7 @@ export class PedidoPage implements OnInit {
 
   constructor(private navCtrl: NavController) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.loadMap();
   }
 
