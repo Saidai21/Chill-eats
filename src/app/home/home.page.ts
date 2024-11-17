@@ -1,4 +1,4 @@
-import { Component  } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { DireccionService } from '../services/direccion.service'; // Ajusta la ruta según tu estructura
 import * as L from 'leaflet';
 @Component({
@@ -6,7 +6,7 @@ import * as L from 'leaflet';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage  {
+export class HomePage implements OnInit {
   direcciones: any[] = [];
   nuevaDireccion: string = '';
   direccionIngresada: string = ''; // Dirección ingresada por el usuario
@@ -16,6 +16,10 @@ export class HomePage  {
     this.cargarDirecciones();
   }
 
+
+  ngOnInit() {
+    this.cargarDirecciones();
+  }
 
   iniciarMapa(){
     this.mapa = L.map('mapa', {
@@ -82,9 +86,14 @@ export class HomePage  {
 
   async agregarDireccion() {
     try {
-      await this.direccionService.agregarDireccion(this.nuevaDireccion);
-      this.nuevaDireccion = ''; // Limpiar el campo
-      this.cargarDirecciones(); // Recargar direcciones después de agregar
+      if(this.direccionIngresada!=null && this.direccionIngresada!=" "){
+        await this.direccionService.agregarDireccion(this.direccionIngresada);
+        alert("Direccion Agregada")
+        this.direccionIngresada = ''; // Limpiar el campo
+        this.cargarDirecciones(); // Recargar direcciones después de agregar
+      }else{
+        alert("Ingrese una dirección valida")
+      }
     } catch (error) {
       console.error('Error al agregar dirección:', error);
     }
