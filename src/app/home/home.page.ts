@@ -1,6 +1,7 @@
-import { Component, OnInit  } from '@angular/core';
-import { DireccionService } from '../services/direccion.service'; // Ajusta la ruta según tu estructura
+import { Component, OnInit } from '@angular/core';
+import { DireccionService } from '../services/direccion.service'; 
 import * as L from 'leaflet';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -12,22 +13,23 @@ export class HomePage implements OnInit {
   direccionIngresada: string = ''; // Dirección ingresada por el usuario
   mapa!: L.Map;
   marker!: L.Marker; 
+
   constructor(private direccionService: DireccionService) {
     this.cargarDirecciones();
   }
-
 
   ngOnInit() {
     this.cargarDirecciones();
   }
 
-  iniciarMapa(){
+  // Inicializar el mapa
+  iniciarMapa() {
     this.mapa = L.map('mapa', {
       center: [-33.4489, -70.6693], // Coordenadas de Santiago
       zoom: 12, // Nivel de zoom inicial
-      doubleClickZoom: false, // Desactiva el zoom con doble clic
-      boxZoom: false, // Desactiva el zoom con selección de área
-      touchZoom: false, // Desactiva el zoom táctil
+      doubleClickZoom: false, 
+      boxZoom: false,
+      touchZoom: false, 
     });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -42,6 +44,7 @@ export class HomePage implements OnInit {
     this.marker = L.marker([-33.4489, -70.6693]).addTo(this.mapa);
   }
 
+  // Buscar dirección en OpenStreetMap
   async buscarDireccion() {
     if (!this.direccionIngresada) {
       alert('Por favor, ingresa una dirección.');
@@ -49,24 +52,16 @@ export class HomePage implements OnInit {
     }
   
     try {
-      // URL para hacer la solicitud a Nominatim
       const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(this.direccionIngresada)}`;
-      
-      // Solicitud con fetch
       const response = await fetch(url);
       const data = await response.json();
   
       if (data.length > 0) {
-        const { lat, lon } = data[0]; // Extrae las coordenadas
-        const coords: L.LatLngTuple = [parseFloat(lat), parseFloat(lon)]; // Convierte a LatLngTuple
+        const { lat, lon } = data[0];
+        const coords: L.LatLngTuple = [parseFloat(lat), parseFloat(lon)];
   
-        // Centra el mapa en las coordenadas encontradas
         this.mapa.setView(coords, 20);
-  
-        // Actualiza el marcador a la nueva ubicación
         this.marker.setLatLng(coords).bindPopup(this.direccionIngresada).openPopup();
-  
-        console.log(`Dirección encontrada: ${this.direccionIngresada}`, coords);
       } else {
         alert('No se encontró la dirección. Por favor, intenta con otra.');
       }
@@ -76,30 +71,34 @@ export class HomePage implements OnInit {
     }
   }
 
-  async cargarDirecciones() {
-    try {
-      const snapshot = await this.direccionService.cargarDirecciones();
-    } catch (error) {
+  // Cargar las direcciones desde Firestore
+  cargarDirecciones() {
+    this.direccionService.cargarDirecciones().subscribe((direcciones) => {
+      this.direcciones = direcciones;
+      console.log('Direcciones cargadas:', this.direcciones);
+    }, (error) => {
       console.error('Error al cargar direcciones:', error);
-    }
+    });
   }
 
+  // Agregar una nueva dirección
   async agregarDireccion() {
     try {
-      if(this.direccionIngresada!=null && this.direccionIngresada!=" "){
+      if (this.direccionIngresada && this.direccionIngresada.trim() !== '') {
         await this.direccionService.agregarDireccion(this.direccionIngresada);
-        alert("Direccion Agregada")
-        this.direccionIngresada = ''; // Limpiar el campo
-        this.cargarDirecciones(); // Recargar direcciones después de agregar
-      }else{
-        alert("Ingrese una dirección valida")
+        alert("Dirección agregada");
+        this.direccionIngresada = ''; // Limpiar el campo de dirección
+      } else {
+        alert("Ingrese una dirección válida");
       }
     } catch (error) {
       console.error('Error al agregar dirección:', error);
+      alert('Ocurrió un error al agregar la dirección.');
     }
   }
 
+  // Método canDismiss (usualmente para control de modales o vistas)
   async canDismiss(data?: any, role?: string) {
-    return role !== 'gesture';
+    return role !== 'gesture';  // Ejemplo de lógica que puedes ajustar según tus necesidades
   }
 }
