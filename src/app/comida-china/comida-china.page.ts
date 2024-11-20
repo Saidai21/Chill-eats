@@ -20,7 +20,7 @@ export class ComidaChinaPage implements OnInit {
   }
 
   cargarComidas() {
-    this.comidas = this.comidaService.obtenerComidas();  
+    this.comidas = this.comidaService.obtenerChina();  
     this.comidas.subscribe(data => {
       console.log('Datos de comidas recibidos:', data);  
     }, error => {

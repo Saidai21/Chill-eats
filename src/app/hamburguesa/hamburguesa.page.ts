@@ -1,47 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CarritoService } from '../services/carrito.service';
-import { Route, Router } from '@angular/router';
+import { ComidaService } from '../services/comida.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-hamburguesa',
   templateUrl: 'hamburguesa.page.html',
   styleUrls: ['hamburguesa.page.scss'],
 })
-export class HamburguesaPage {
-  productos = [
-    {
-      id: '1',
-      nombre: 'Hamburguesa Clásica',
-      precio: 7000,
-      imagen: 'https://assets.unileversolutions.com/recipes-v2/218401.jpg',
-    },
-    {
-      id: '2',
-      nombre: 'Hamburguesa Bacon',
-      precio: 8500,
-      imagen: 'https://assets.unileversolutions.com/recipes-v2/232001.jpg',
-    },
-    {
-      id: '3',
-      nombre: 'Hamburguesa BBQ',
-      precio: 9000,
-      imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGqnZ-MFsT5EgqJTOxMZrGPiLjcEcA8kA7tA&s',
-    },
-    {
-      id: '4',
-      nombre: 'Hamburguesa Vegetariana',
-      precio: 7500,
-      imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1WwBst48W8AjNOf8HUvowXZuyL1OOjdjrAQ&s',
-    },
-    {
-      id: '5',
-      nombre: 'Hamburguesa Triple',
-      precio: 10000,
-      imagen: 'https://cdn.pedix.app/W0AsEiy0lKAARE913TEH/products/1655161847947.png?size=800x800',
-    },
-  ];
+export class HamburguesaPage implements OnInit {
+  hamburguesas!: Observable<any[]>;
 
-  constructor(private carritoService: CarritoService, private router:Router) {}
+  constructor(private router: Router, private comidaService: ComidaService, private carritoService: CarritoService) {}
+
+  ngOnInit() {
+    this.cargarHamburguesas();
+  }
+
+  cargarHamburguesas() {
+    // Se obtiene la lista de hamburguesas desde el servicio de comida
+    this.hamburguesas = this.comidaService.obtenerHamburguesas(); // Si es necesario, filtra las hamburguesas en el backend o aquí.
+    this.hamburguesas.subscribe(data => {
+      console.log('Datos de hamburguesas recibidos:', data);
+    }, error => {
+      console.error('Error al cargar hamburguesas:', error);
+    });
+  }
 
   async agregarProducto(producto: { id: string; nombre: string; precio: number }) {
     await this.carritoService.agregarProducto(producto);

@@ -6,37 +6,60 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class DireccionService {
+export class CarritoService {
   constructor(
     private firestore: AngularFirestore,
     private afAuth: AngularFireAuth
   ) {}
 
-  // Agregar una nueva dirección a Firestore
-  async agregarDireccion(nuevaDireccion: string) {
-    const user = await this.afAuth.currentUser;  // Espera a que se resuelva la promesa
+  // Agregar un producto al carrito
+  async agregarProducto(producto: { id: string; nombre: string; precio: number }) {
+    try {
+      const user = await this.afAuth.currentUser;
 
-    if (user) {
-      const direccionesRef = this.firestore.collection('users').doc(user.uid).collection('direcciones');
-      await direccionesRef.add({ label: nuevaDireccion });
-    } else {
-      throw new Error('Usuario no autenticado');
+      if (!user) {
+        throw new Error('Usuario no autenticado');
+      }
+
+      const carritoRef = this.firestore.collection('users').doc(user.uid).collection('carrito');
+      await carritoRef.add(producto);
+    } catch (error) {
+      console.error('Error al agregar producto:', error);
+      throw error;
     }
   }
 
-  // Cargar direcciones de Firestore de forma reactiva
-  cargarDirecciones(): Observable<any[]> {
+  // Cargar el carrito de forma reactiva
+  cargarCarrito(): Observable<any[]> {
     return new Observable(observer => {
       this.afAuth.currentUser.then(user => {
         if (user) {
-          const direccionesRef = this.firestore.collection('users').doc(user.uid).collection('direcciones');
-          direccionesRef.valueChanges().subscribe(direcciones => {
-            observer.next(direcciones);
-          });
+          const carritoRef = this.firestore.collection('users').doc(user.uid).collection('carrito');
+          carritoRef.valueChanges().subscribe(
+            productos => observer.next(productos),
+            error => observer.error(error)
+          );
         } else {
           observer.error('Usuario no autenticado');
         }
       }).catch(error => observer.error(error));
     });
+  }
+
+  // Eliminar un producto del carrito
+  async eliminarProducto(productoId: string) {
+    try {
+      const user = await this.afAuth.currentUser;
+
+      if (!user) {
+        throw new Error('Usuario no autenticado');
+      }
+
+      const carritoRef = this.firestore.collection('users').doc(user.uid).collection('carrito').doc(productoId);
+      await carritoRef.delete();
+    } catch (error) {
+      console.error('Error al eliminar producto:', error);
+      throw error;
+    }
   }
 }

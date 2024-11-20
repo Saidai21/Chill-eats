@@ -1,18 +1,38 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { CarritoService } from '../services/carrito.service';
+import { ComidaService } from '../services/comida.service';
+import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-pizza',
   templateUrl: './pizza.page.html',
   styleUrls: ['./pizza.page.scss'],
 })
 export class PizzaPage implements OnInit {
+  pizzas!: Observable<any[]>;
 
-  constructor(private navCtrl: NavController) { }
+  // Inyección de servicios
+  constructor(private router: Router, private comidaService: ComidaService, private carritoService: CarritoService) {}
 
   ngOnInit() {
+    this.cargarPizzas();
+  }
+
+  cargarPizzas() {
+    this.pizzas = this.comidaService.obtenerPizzas(); // Se asume que "obtenerComidas" devuelve todas las comidas, incluidas las pizzas
+    this.pizzas.subscribe(data => {
+      console.log('Datos de pizzas recibidos:', data);
+    }, error => {
+      console.error('Error al cargar pizzas:', error);
+    });
+  }
+
+  async agregarProducto(producto: { id: string; nombre: string; precio: number }) {
+    await this.carritoService.agregarProducto(producto);
   }
 
   goToMainPage() {
-    this.navCtrl.navigateBack('/home'); 
+    this.router.navigate(['/home']);
   }
 }

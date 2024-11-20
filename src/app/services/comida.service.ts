@@ -9,11 +9,28 @@ export class ComidaService {
   constructor(private firestore: AngularFirestore) {}
 
   // Método para obtener los platos desde la subcolección "Carta"
-  obtenerComidas(): Observable<any[]> {
+  obtenerChina(): Observable<any[]> {
     return this.firestore
       .collection('Restaurantes')
       .doc('China')
       .collection('Carta')
       .valueChanges();  // Devuelve un Observable con los datos de la subcolección "Carta"
   }
+
+  obtenerPizzas(): Observable<any[]> {
+    return this.firestore
+      .collection('Restaurantes')
+      .doc('Pizzas')
+      .collection('Carta')
+      .valueChanges(); // Devuelve un Observable con los datos de la subcolección "Carta"
+  }
+
+  obtenerHamburguesas(): Observable<any[]> {
+    return this.firestore
+      .collection('Restaurantes')
+      .doc('Hamburguesas')
+      .collection('Carta')
+      .valueChanges(); // Devuelve un Observable con los datos de la subcolección "Carta"
+  }
 }
+
