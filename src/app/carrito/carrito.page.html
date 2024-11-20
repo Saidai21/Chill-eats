@@ -23,11 +23,11 @@
         <ion-card-title>Carrito</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <ion-item>
+        <ion-item *ngFor="let carrito of comida">
           <ion-thumbnail slot="start">
-            <img alt="" src="https://img.freepik.com/fotos-premium/foto-stock-hamburguesa-clasica-aislada-blanco_940723-217.jpg"/>
+            <img alt="Imagen de producto" src={{carrito.imagen}} />
           </ion-thumbnail>
-          <ion-label>Hamburgesa clasica: $500</ion-label>
+          <ion-label>{{ carrito.nombre }} - ${{ carrito.valor}}</ion-label>
         </ion-item>
       </ion-card-content>
       <ion-button (click)="presentAlert()" (click)="ejecutar()" routerLink="/pedido" >Comprar Ya</ion-button>

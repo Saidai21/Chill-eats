@@ -36,10 +36,16 @@
         <ion-text>{{ phone }}</ion-text>
       </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Dirección</ion-label>
-        <ion-text>{{ address }}</ion-text>
-      </ion-item>
+      <ion-list>
+        <ion-item>
+          <ion-label position="stacked">Direccion</ion-label>
+          <ion-select placeholder="Selecciona una dirección">
+            <ion-select-option *ngFor="let direccion of direcciones" [value]="direccion.id">
+              {{ direccion.label }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>  
     </ion-card-content>
   </ion-card>
   <ion-button id="logout-btn" color="danger" (click)="logout()">Cerrar Sesión</ion-button>

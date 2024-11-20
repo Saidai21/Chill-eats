@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
+import { DireccionService } from '../services/direccion.service';
 
 @Component({
   selector: 'app-perfil',
@@ -16,10 +17,12 @@ export class PerfilPage implements OnInit {
   email: string = '';
   phone: string = '';
   address: string = '';
+  direcciones: any[] = [];
   user$!: Observable<any>
-  constructor(private aService:AuthService,private router:Router,private alertController:AlertController,private firestore: AngularFirestore) {}
+  constructor(private aService:AuthService,private router:Router,private alertController:AlertController,private firestore: AngularFirestore,private direccionService: DireccionService) {}
 
 async ngOnInit() {
+  this.cargarDirecciones();
   this.user$ = this.aService.obtenerUser();
   this.user$.subscribe(user => {
     console.log(user); 
@@ -44,5 +47,14 @@ async ngOnInit() {
     localStorage.removeItem('email');
     this.presentAlert("Sesion Cerrada","Su sesion ha sido cerrada correctamente")
     this.router.navigate(["/iniciar-sesion"]);
+  }
+
+  cargarDirecciones() {
+    this.direccionService.cargarDirecciones().subscribe((direcciones) => {
+      this.direcciones = direcciones;
+      console.log('Direcciones cargadas:', this.direcciones);
+    }, (error) => {
+      console.error('Error al cargar direcciones:', error);
+    });
   }
 }
